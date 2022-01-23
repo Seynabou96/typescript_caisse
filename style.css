@@ -5,7 +5,7 @@ body{
 header{
     background:#1A374D;
     color: white;
-    height: 40vh;
+    height: 20vh;
     margin: 10px;
 }
 h1,h2,footer{
@@ -23,10 +23,11 @@ button{
     height: 30px;
 }
 main{
-    height: 80vh;
+    height:auto;
     margin: 9px;
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
 }
 footer{
     background-color: #1A374D;
@@ -43,6 +44,10 @@ div.left,div.right,div.center{
 }
 div.left,div.right{
     background-color:#406882;
+}
+div.left,div.center{
+    display: flex;
+    justify-content: space-evenly;
 }
 div.center{
     background-color: #6998AB;
@@ -64,6 +69,26 @@ div.center{
 #etatCompte{
     background-color: green;
 }
+ul{
+    margin: 0px;
+    padding:0px;
+}
+li{
+    list-style: none;
+    margin:10px;
+    
+}
+.debit{
+    background-color: #dc143c;
+    color: white;
+    font-size: 1.5em;
+}
+.credit{
+    background-color: #2E8B57;
+    color: white;
+    font-size: 1.5em;
+    
+}
 
 table,th,td{
  border: 2px solid #1A374D;
@@ -78,18 +103,14 @@ table,th,td{
         flex-direction: column;
         
     }
-    main{
-        flex-direction: column;
-    }
+   
     input,select{
         margin-top: 10px;
     }
     button{
         margin-top: 10px;
     }
-    div.left,div.right{
-        display: flex;
-    }
+    
 } 
 /* @media screen and(max-width:200px){
     form{

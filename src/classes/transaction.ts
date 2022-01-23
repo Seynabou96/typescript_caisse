@@ -26,7 +26,7 @@ export class Transaction {
         return this.motifTransaction;
     }
     setText(){
-        return `${this.getSomme()} a été ${this.getType() === 'debit' ? 'retiré' : 'déposé'} par ${this.getName} suite a ${this.getMotif()}`;
+        return `${this.getSomme()} a été ${this.getType() === 'debit' ? 'retiré' : 'déposé'} par ${this.getName()} suite a ${this.getMotif()}`;
     }
 }
 

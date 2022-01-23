@@ -131,7 +131,7 @@ function () {
   function Caisse(solde) {
     this.transactions = [];
     this.observers = [];
-    this.solde = solde; // this.notifyObserver()
+    this.solde = solde;
   }
 
   Caisse.prototype.subscribeObserver = function (obs) {
@@ -157,7 +157,6 @@ function () {
 
   Caisse.prototype.addTransac = function (transac) {
     this.transactions.push(transac);
-    this.notifyObserver();
     console.log('addtransaction');
 
     if (transac.getType() === 'debit') {
@@ -165,6 +164,8 @@ function () {
     } else {
       this.solde += transac.getSomme();
     }
+
+    this.notifyObserver();
   };
 
   Caisse.prototype.getTransac = function () {
@@ -179,6 +180,45 @@ function () {
 }();
 
 exports.Caisse = Caisse;
+},{}],"src/classes/listeTransactionView.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.listeTransactionView = void 0;
+
+var listeTransactionView =
+/** @class */
+function () {
+  function listeTransactionView() {
+    this.ul = document.querySelector('.ulListeTransac');
+  }
+
+  listeTransactionView.prototype.update = function (caisse) {
+    var _this = this;
+
+    var transac = caisse.getTransac();
+    this.ul.innerHTML = '';
+    transac.forEach(function (trsc) {
+      var liHtml = document.createElement('li');
+      var headHtml = document.createElement('h4');
+      var paraHtml = document.createElement('p');
+      liHtml.className = trsc.getType();
+      headHtml.innerText = trsc.getType() === 'debit' ? 'Debit' : 'Credit';
+      paraHtml.innerHTML = trsc.setText();
+
+      _this.ul.append(liHtml);
+
+      liHtml.append(headHtml);
+      liHtml.append(paraHtml);
+    });
+  };
+
+  return listeTransactionView;
+}();
+
+exports.listeTransactionView = listeTransactionView;
 },{}],"src/classes/soldeView.ts":[function(require,module,exports) {
 "use strict";
 
@@ -238,7 +278,7 @@ function () {
   };
 
   Transaction.prototype.setText = function () {
-    return "".concat(this.getSomme(), " a \xE9t\xE9 ").concat(this.getType() === 'debit' ? 'retiré' : 'déposé', " par ").concat(this.getName, " suite a ").concat(this.getMotif());
+    return "".concat(this.getSomme(), " a \xE9t\xE9 ").concat(this.getType() === 'debit' ? 'retiré' : 'déposé', " par ").concat(this.getName(), " suite a ").concat(this.getMotif());
   };
 
   return Transaction;
@@ -254,6 +294,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var caisse_1 = require("./src/classes/caisse");
 
+var listeTransactionView_1 = require("./src/classes/listeTransactionView");
+
 var soldeView_1 = require("./src/classes/soldeView");
 
 var transaction_1 = require("./src/classes/transaction"); //instanciation de la caisse(subject)
@@ -261,9 +303,11 @@ var transaction_1 = require("./src/classes/transaction"); //instanciation de la 
 
 var caisse = new caisse_1.Caisse(10000); //instanciation des views(observers)
 
-var solde = new soldeView_1.soldeView(); //inscription des views à la caisse
+var solde = new soldeView_1.soldeView();
+var listeTransaction = new listeTransactionView_1.listeTransactionView(); //inscription des views à la caisse
 
-caisse.subscribeObserver(solde); //Déclaration et Ecoute de l'événement sur le bouton ADD
+caisse.subscribeObserver(solde);
+caisse.subscribeObserver(listeTransaction); //Déclaration et Ecoute de l'événement sur le bouton ADD
 
 var buttonADD = document.querySelector('#buttonSubmit');
 buttonADD.addEventListener('click', function (e) {
@@ -278,7 +322,7 @@ buttonADD.addEventListener('click', function (e) {
 
   caisse.addTransac(transaction);
 });
-},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/listeTransactionView":"src/classes/listeTransactionView.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

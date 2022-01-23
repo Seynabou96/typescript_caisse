@@ -9,7 +9,6 @@ export class Caisse implements ISubject{
     private observers:IObserver[]=[];
     constructor(solde : number) {
         this.solde = solde;
-        // this.notifyObserver()
     }
     subscribeObserver(obs: IObserver) {
         this.observers.push(obs);
@@ -27,7 +26,6 @@ export class Caisse implements ISubject{
     }
     addTransac(transac: Transaction){
         this.transactions.push(transac);
-        this.notifyObserver()
         console.log('addtransaction');
         if (transac.getType() === 'debit') {
             this.solde -= transac.getSomme();
@@ -35,6 +33,7 @@ export class Caisse implements ISubject{
         else{
             this.solde += transac.getSomme();
         }
+        this.notifyObserver()
     }
     getTransac(){
         return this.transactions;

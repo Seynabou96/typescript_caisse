@@ -1,4 +1,5 @@
 import { Caisse } from "./src/classes/caisse";
+import { listeTransactionView } from "./src/classes/listeTransactionView";
 import { soldeView } from "./src/classes/soldeView";
 import { Transaction } from "./src/classes/transaction";
 
@@ -7,10 +8,12 @@ import { Transaction } from "./src/classes/transaction";
 let caisse = new Caisse(10000);
 
 //instanciation des views(observers)
-let solde = new soldeView()
+let solde = new soldeView();
+let listeTransaction = new listeTransactionView();
 
 //inscription des views à la caisse
 caisse.subscribeObserver(solde);
+caisse.subscribeObserver(listeTransaction);
 
 //Déclaration et Ecoute de l'événement sur le bouton ADD
 
@@ -33,5 +36,6 @@ buttonADD.addEventListener('click',(e:Event)=>{
         )
     //  ajout de la transaction dans la caisse
     caisse.addTransac(transaction);
+   
 })
 
