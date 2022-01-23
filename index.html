@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Caisses Views</title>
+</head>
+
+<body>
+    <header>
+        <h1>Caisse</h1>
+            <form action="">
+                <label for="name">Nom
+                <input type="text" id="name" name="name" /></label>
+                <label for="somme">Somme
+                <input type="number" name="somme" id="somme" /></label>
+                <label for="type">Type
+                <select name="type" id="type">
+                    <option value="credit">credit</option>
+                    <option value="debit">debit</option>
+                </select></label>
+                <label for="motif">Motif
+                <input type="text" name="motif" id="motif" /></label>
+                <button type="submit">ADD</button>
+            </form>
+    </header>
+    <main>
+        <div class="left">
+            <div id="firstView">
+                <h2>Solde</h2>
+                <div id="divSolde"></div>
+            </div>
+            <div id="thirdView">
+                <h2>Nombre de Transactions</h2>
+                <table id="countCreditDebit">
+                    <thead>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </thead>
+                    <tbody>
+                        <td id="countDebit"></td>
+                        <td id="countCredit"></td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="center">
+            <div id="secondView">
+                <h2>Liste Transactions</h2>
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+        <div class="right">
+            <div id="fourView">
+                <h2>Etat Compte</h2>
+                <div id="etatCompte"></div>
+            </div>
+            <div id="fiveView">
+                <h2>Tableau des cumules par Personne</h2>
+                <table>
+                    <thead>
+                        <th>Personnel</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>It's All!</p>
+    </footer>
+    <script type="module" src="app.ts"></script>
+</body>
+
+</html>

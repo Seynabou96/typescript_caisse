@@ -1,0 +1,91 @@
+body{
+    height: 100vh;
+    background-color: #B1D0E0;
+}
+header{
+    background:#1A374D;
+    color: white;
+    height: 20vh;
+    margin: 10px;
+}
+h1,h2,footer{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+form{
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+
+}
+main{
+    height: 80vh;
+    margin: 9px;
+    display: flex;
+    justify-content: space-between;
+}
+footer{
+    background-color: #1A374D;
+    color: white;
+    font-size: 1.5em;
+    height: 10vh;
+    padding: 10px;
+    margin:9px ;
+
+}
+div.left,div.right,div.center{
+    width: 100%;
+    color: white;
+}
+div.left,div.right{
+    background-color:#406882;
+}
+div.center{
+    background-color: #6998AB;
+}
+
+#divSolde,#etatCompte{
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    color: black;
+}
+#divSolde{
+    background-color: #B1D0E0;
+}
+#etatCompte{
+    background-color: green;
+}
+
+table,th,td{
+ border: 2px solid #1A374D;
+
+}
+@media screen and (max-width:850px){
+    header{
+        height: 35%;
+    }   
+    
+    form{
+        flex-direction: column;
+        
+    }
+    main{
+        flex-direction: column;
+    }
+    input,select{
+        margin-top: 10px;
+    }
+    button{
+        margin-top: 10px;
+        width:50px;
+    }
+    div.left,div.right{
+        display: flex;
+    }
+} 
+/* @media screen and(max-width:200px){
+    form{
+        width: auto;
+    }
+}  */
