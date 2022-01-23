@@ -1,4 +1,5 @@
 import { Caisse } from "./src/classes/caisse";
+import { etatCompte } from "./src/classes/etatCompteView";
 import { listeTransactionView } from "./src/classes/listeTransactionView";
 import { nombreDeTransactions } from "./src/classes/nombreDeTransactionsView";
 import { soldeView } from "./src/classes/soldeView";
@@ -12,11 +13,13 @@ let caisse = new Caisse(10000);
 let solde = new soldeView();
 let listeTransaction = new listeTransactionView();
 let nombreTransaction = new nombreDeTransactions();
+let etat = new etatCompte();
 
 //inscription des views à la caisse
 caisse.subscribeObserver(solde);
 caisse.subscribeObserver(listeTransaction);
-caisse.subscribeObserver(nombreTransaction)
+caisse.subscribeObserver(nombreTransaction);
+caisse.subscribeObserver(etat);
 
 //Déclaration et Ecoute de l'événement sur le bouton ADD
 

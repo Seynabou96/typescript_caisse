@@ -180,6 +180,38 @@ function () {
 }();
 
 exports.Caisse = Caisse;
+},{}],"src/classes/etatCompteView.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.etatCompte = void 0;
+
+var etatCompte =
+/** @class */
+function () {
+  function etatCompte() {
+    this.div = document.querySelector('#etatCompte');
+  }
+
+  etatCompte.prototype.update = function (caisse) {
+    this.div.className = 'debit';
+    var solde = caisse.getSolde();
+
+    if (solde < 0) {
+      this.div.className = 'debit';
+      this.div.innerText = 'A découvert';
+    } else {
+      this.div.className = 'credit';
+      this.div.innerText = 'A crédit';
+    }
+  };
+
+  return etatCompte;
+}();
+
+exports.etatCompte = etatCompte;
 },{}],"src/classes/listeTransactionView.ts":[function(require,module,exports) {
 "use strict";
 
@@ -330,6 +362,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var caisse_1 = require("./src/classes/caisse");
 
+var etatCompteView_1 = require("./src/classes/etatCompteView");
+
 var listeTransactionView_1 = require("./src/classes/listeTransactionView");
 
 var nombreDeTransactionsView_1 = require("./src/classes/nombreDeTransactionsView");
@@ -343,11 +377,13 @@ var caisse = new caisse_1.Caisse(10000); //instanciation des views(observers)
 
 var solde = new soldeView_1.soldeView();
 var listeTransaction = new listeTransactionView_1.listeTransactionView();
-var nombreTransaction = new nombreDeTransactionsView_1.nombreDeTransactions(); //inscription des views à la caisse
+var nombreTransaction = new nombreDeTransactionsView_1.nombreDeTransactions();
+var etat = new etatCompteView_1.etatCompte(); //inscription des views à la caisse
 
 caisse.subscribeObserver(solde);
 caisse.subscribeObserver(listeTransaction);
-caisse.subscribeObserver(nombreTransaction); //Déclaration et Ecoute de l'événement sur le bouton ADD
+caisse.subscribeObserver(nombreTransaction);
+caisse.subscribeObserver(etat); //Déclaration et Ecoute de l'événement sur le bouton ADD
 
 var buttonADD = document.querySelector('#buttonSubmit');
 buttonADD.addEventListener('click', function (e) {
@@ -362,7 +398,7 @@ buttonADD.addEventListener('click', function (e) {
 
   caisse.addTransac(transaction);
 });
-},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/listeTransactionView":"src/classes/listeTransactionView.ts","./src/classes/nombreDeTransactionsView":"src/classes/nombreDeTransactionsView.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/etatCompteView":"src/classes/etatCompteView.ts","./src/classes/listeTransactionView":"src/classes/listeTransactionView.ts","./src/classes/nombreDeTransactionsView":"src/classes/nombreDeTransactionsView.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
