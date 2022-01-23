@@ -6,8 +6,8 @@ export class Transaction {
 
     constructor(nom:string,montant : number,type : string, motif : string) {
         this.nomPersonne=nom;
-        this.typeTransaction = type;
         this.sommeTtransaction = montant;
+        this.typeTransaction = type;
         this.motifTransaction = motif;
     }
     getName(){

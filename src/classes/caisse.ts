@@ -4,28 +4,30 @@ import { Transaction } from "./transaction";
 
 
 export class Caisse implements ISubject{
-    private solde : number=0;
+    private solde : number;
     private transactions : Transaction[]=[];
-    private observer:IObserver[]=[];
+    private observers:IObserver[]=[];
     constructor(solde : number) {
         this.solde = solde;
-        this.notifyObserver()
+        // this.notifyObserver()
     }
     subscribeObserver(obs: IObserver) {
-        this.observer.push(obs)
+        this.observers.push(obs);
+        obs.update(this)
         console.log('subscribe');
     }
     unSubscribeObserver(obs: IObserver) {
-        let index = this.observer.indexOf(obs)
-        this.observer.splice(index,1)
+        let index = this.observers.indexOf(obs)
+        this.observers.splice(index,1)
         console.log(('unsubscribe'));
     }
     notifyObserver() {
-        this.observer.forEach(obs=>obs.update(this))
+        this.observers.forEach(obs=>obs.update(this))
         console.log('notify');
     }
     addTransac(transac: Transaction){
         this.transactions.push(transac);
+        this.notifyObserver()
         console.log('addtransaction');
         if (transac.getType() === 'debit') {
             this.solde -= transac.getSomme();

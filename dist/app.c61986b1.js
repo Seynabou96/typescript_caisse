@@ -117,9 +117,168 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"app.ts":[function(require,module,exports) {
-console.log('hello');
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+})({"src/classes/caisse.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Caisse = void 0;
+
+var Caisse =
+/** @class */
+function () {
+  function Caisse(solde) {
+    this.transactions = [];
+    this.observers = [];
+    this.solde = solde; // this.notifyObserver()
+  }
+
+  Caisse.prototype.subscribeObserver = function (obs) {
+    this.observers.push(obs);
+    obs.update(this);
+    console.log('subscribe');
+  };
+
+  Caisse.prototype.unSubscribeObserver = function (obs) {
+    var index = this.observers.indexOf(obs);
+    this.observers.splice(index, 1);
+    console.log('unsubscribe');
+  };
+
+  Caisse.prototype.notifyObserver = function () {
+    var _this = this;
+
+    this.observers.forEach(function (obs) {
+      return obs.update(_this);
+    });
+    console.log('notify');
+  };
+
+  Caisse.prototype.addTransac = function (transac) {
+    this.transactions.push(transac);
+    this.notifyObserver();
+    console.log('addtransaction');
+
+    if (transac.getType() === 'debit') {
+      this.solde -= transac.getSomme();
+    } else {
+      this.solde += transac.getSomme();
+    }
+  };
+
+  Caisse.prototype.getTransac = function () {
+    return this.transactions;
+  };
+
+  Caisse.prototype.getSolde = function () {
+    return this.solde;
+  };
+
+  return Caisse;
+}();
+
+exports.Caisse = Caisse;
+},{}],"src/classes/soldeView.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.soldeView = void 0;
+
+var soldeView =
+/** @class */
+function () {
+  function soldeView() {
+    this.div = document.querySelector('#divSolde');
+  }
+
+  soldeView.prototype.update = function (caisse) {
+    var solde = caisse.getSolde();
+    this.div.innerHTML = solde.toString();
+  };
+
+  return soldeView;
+}();
+
+exports.soldeView = soldeView;
+},{}],"src/classes/transaction.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Transaction = void 0;
+
+var Transaction =
+/** @class */
+function () {
+  function Transaction(nom, montant, type, motif) {
+    this.nomPersonne = nom;
+    this.sommeTtransaction = montant;
+    this.typeTransaction = type;
+    this.motifTransaction = motif;
+  }
+
+  Transaction.prototype.getName = function () {
+    return this.nomPersonne;
+  };
+
+  Transaction.prototype.getType = function () {
+    return this.typeTransaction;
+  };
+
+  Transaction.prototype.getSomme = function () {
+    return this.sommeTtransaction;
+  };
+
+  Transaction.prototype.getMotif = function () {
+    return this.motifTransaction;
+  };
+
+  Transaction.prototype.setText = function () {
+    return "".concat(this.getSomme(), " a \xE9t\xE9 ").concat(this.getType() === 'debit' ? 'retiré' : 'déposé', " par ").concat(this.getName, " suite a ").concat(this.getMotif());
+  };
+
+  return Transaction;
+}();
+
+exports.Transaction = Transaction;
+},{}],"app.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var caisse_1 = require("./src/classes/caisse");
+
+var soldeView_1 = require("./src/classes/soldeView");
+
+var transaction_1 = require("./src/classes/transaction"); //instanciation de la caisse(subject)
+
+
+var caisse = new caisse_1.Caisse(10000); //instanciation des views(observers)
+
+var solde = new soldeView_1.soldeView(); //inscription des views à la caisse
+
+caisse.subscribeObserver(solde); //Déclaration et Ecoute de l'événement sur le bouton ADD
+
+var buttonADD = document.querySelector('#buttonSubmit');
+buttonADD.addEventListener('click', function (e) {
+  e.preventDefault(); //déclaration des différents champs du formulaire
+
+  var name = document.querySelector('#name');
+  var somme = document.querySelector('#somme');
+  var type = document.querySelector('#type');
+  var motif = document.querySelector('#motif'); //instanciation de la transaction
+
+  var transaction = new transaction_1.Transaction(name.value, parseInt(somme.value), type.value, motif.value); //  ajout de la transaction dans la caisse
+
+  caisse.addTransac(transaction);
+});
+},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -147,7 +306,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62897" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65356" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
