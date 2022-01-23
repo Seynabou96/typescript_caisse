@@ -287,6 +287,78 @@ function () {
 }();
 
 exports.nombreDeTransactions = nombreDeTransactions;
+},{}],"src/classes/personalArray.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.personalArray = void 0;
+
+var personalArray =
+/** @class */
+function () {
+  function personalArray() {
+    this.table = document.querySelector('#cumulesSommes');
+  }
+
+  personalArray.prototype.update = function (caisse) {
+    var _this = this;
+
+    var transac = caisse.getTransac();
+    var personnesArray = [];
+    transac.forEach(function (trs) {
+      var db = personnesArray.filter(function (element) {
+        return element.name === trs.getName();
+      }).length;
+
+      if (db === 0) {
+        var personne = {
+          name: trs.getName(),
+          debit: trs.getType() === 'debit' ? trs.getSomme() : 0,
+          credit: trs.getType() === 'credit' ? trs.getSomme() : 0
+        };
+        personnesArray.push(personne);
+      } else {
+        for (var _i = 0, personnesArray_1 = personnesArray; _i < personnesArray_1.length; _i++) {
+          var ele = personnesArray_1[_i];
+          var index = personnesArray.findIndex(function (pers) {
+            return pers.name === trs.getName();
+          });
+
+          if (trs.getType() === 'debit') {
+            personnesArray[index].debit += trs.getSomme();
+          } else {
+            personnesArray[index].credit += trs.getSomme();
+          }
+        }
+      }
+
+      _this.table.innerHTML = "\n            <table id=\"cumulesSommes\">\n                <thead>\n                    <th>Personnel</th>\n                    <th>Debit</th>\n                    <th>Credit</th>\n                </thead>\n            </table>";
+
+      for (var _a = 0, personnesArray_2 = personnesArray; _a < personnesArray_2.length; _a++) {
+        var personne = personnesArray_2[_a];
+        var tr = document.createElement('tr');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
+        td1.innerText = personne.name;
+        td2.innerText = personne.debit.toString();
+        td3.innerText = personne.credit.toString();
+
+        _this.table.append(tr);
+
+        tr.append(td1);
+        tr.append(td2);
+        tr.append(td3);
+      }
+    });
+  };
+
+  return personalArray;
+}();
+
+exports.personalArray = personalArray;
 },{}],"src/classes/soldeView.ts":[function(require,module,exports) {
 "use strict";
 
@@ -368,6 +440,8 @@ var listeTransactionView_1 = require("./src/classes/listeTransactionView");
 
 var nombreDeTransactionsView_1 = require("./src/classes/nombreDeTransactionsView");
 
+var personalArray_1 = require("./src/classes/personalArray");
+
 var soldeView_1 = require("./src/classes/soldeView");
 
 var transaction_1 = require("./src/classes/transaction"); //instanciation de la caisse(subject)
@@ -378,12 +452,14 @@ var caisse = new caisse_1.Caisse(10000); //instanciation des views(observers)
 var solde = new soldeView_1.soldeView();
 var listeTransaction = new listeTransactionView_1.listeTransactionView();
 var nombreTransaction = new nombreDeTransactionsView_1.nombreDeTransactions();
-var etat = new etatCompteView_1.etatCompte(); //inscription des views à la caisse
+var etat = new etatCompteView_1.etatCompte();
+var personnalAccount = new personalArray_1.personalArray(); //inscription des views à la caisse
 
 caisse.subscribeObserver(solde);
 caisse.subscribeObserver(listeTransaction);
 caisse.subscribeObserver(nombreTransaction);
-caisse.subscribeObserver(etat); //Déclaration et Ecoute de l'événement sur le bouton ADD
+caisse.subscribeObserver(etat);
+caisse.subscribeObserver(personnalAccount); //Déclaration et Ecoute de l'événement sur le bouton ADD
 
 var buttonADD = document.querySelector('#buttonSubmit');
 buttonADD.addEventListener('click', function (e) {
@@ -398,7 +474,7 @@ buttonADD.addEventListener('click', function (e) {
 
   caisse.addTransac(transaction);
 });
-},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/etatCompteView":"src/classes/etatCompteView.ts","./src/classes/listeTransactionView":"src/classes/listeTransactionView.ts","./src/classes/nombreDeTransactionsView":"src/classes/nombreDeTransactionsView.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./src/classes/caisse":"src/classes/caisse.ts","./src/classes/etatCompteView":"src/classes/etatCompteView.ts","./src/classes/listeTransactionView":"src/classes/listeTransactionView.ts","./src/classes/nombreDeTransactionsView":"src/classes/nombreDeTransactionsView.ts","./src/classes/personalArray":"src/classes/personalArray.ts","./src/classes/soldeView":"src/classes/soldeView.ts","./src/classes/transaction":"src/classes/transaction.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

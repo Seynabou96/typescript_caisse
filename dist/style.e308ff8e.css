@@ -21,6 +21,10 @@ form{
 button{
     width: 50px;
     height: 30px;
+    background-color: #6998AB;
+}
+button:hover{
+    background-color: #406882;
 }
 main{
     height:auto;
@@ -90,6 +94,7 @@ li{
 
 table,th,td{
  border: 2px solid #1A374D;
+ width: 500px;
 
 }
 @media screen and (max-width:850px){
@@ -108,7 +113,9 @@ table,th,td{
     button{
         margin-top: 10px;
     }
-    
+    table{
+        width: 250px;
+    };
 } 
 /* @media screen and(max-width:200px){
     form{
